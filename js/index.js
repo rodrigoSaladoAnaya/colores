@@ -41,9 +41,9 @@ const createBubble = function(color, x, y, r, time_floating, delay_start) {
 const generateBubbles = function() {
   $.each(colores, function(index, color) {
     for(let i = 0; i < 5; i++) {
-      const r = getRandomInt(10, 100);
+      const r = getRandomInt(20, 50);
       const x = getRandomInt(r, $container.width() - r);
-      const y = $container.height() + r;
+      const y = $container.height();
       const time_floating = getRandomInt(10, 30)
       const delay_start = getRandomInt(0, 4000) / 1000;
       createBubble(color, x, y, r, time_floating, delay_start);
