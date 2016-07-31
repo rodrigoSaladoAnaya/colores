@@ -52,7 +52,16 @@ const generateBubbles = function() {
 
 }
 
+const fullscreen = function() {
+  $("#fullsc").click(function() {
+    if (screenfull.enabled) {
+      screenfull.request(document.documentElement);
+    }
+  });
+}
+
 $(document).ready(function() {
+  fullscreen();
   $container = $("#container");
-  generateBubbles()
+  generateBubbles();
 });
