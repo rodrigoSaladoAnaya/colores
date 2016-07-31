@@ -41,7 +41,7 @@ const createBubble = function(color, x, y, r, time_floating, delay_start) {
 const generateBubbles = function() {
   $.each(colores, function(index, color) {
     for(let i = 0; i < 5; i++) {
-      const r = getRandomInt(50, 150);
+      const r = getRandomInt(10, 100);
       const x = getRandomInt(r, $container.width() - r);
       const y = $container.height() + r;
       const time_floating = getRandomInt(10, 30)
@@ -57,6 +57,7 @@ const fullscreen = function() {
     if (screenfull.enabled) {
       screenfull.request(document.documentElement);
     }
+    $(this).hide();
   });
 }
 
