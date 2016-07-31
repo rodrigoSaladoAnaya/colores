@@ -58,11 +58,11 @@ const fullscreen = function() {
       screenfull.request(document.documentElement);
     }
     $(this).hide();
+    generateBubbles();    
   });
 }
 
 $(document).ready(function() {
   fullscreen();
   $container = $("#container");
-  generateBubbles();
 });
