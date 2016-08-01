@@ -1,13 +1,13 @@
 let $container;
 
 const colores = {
-  blanco: {body: "#fff", border: "#e5e5e5"},
-  rojo: {body: "#e50000", border: "#cc0000"},
-  amarillo: {body: "#fef35a", border: "#fef79c"},
-  azul: {body: "#1919ff", border: "#4c4cff"},
-  negro: {body: "#000000", border: "#666666"},
-  verde: {body: "#079811", border: "#6ac170"},
-  cafe: {body: "#82371a", border: "#b48775"}
+  blanco: {body: "#fff", border: "#e5e5e5", audio: "audio-blanco"},
+  rojo: {body: "#e50000", border: "#cc0000", audio: "audio-rojo"},
+  amarillo: {body: "#fef35a", border: "#fef79c", audio: "audio-amarillo"},
+  azul: {body: "#1919ff", border: "#4c4cff", audio: "audio-azul"},
+  negro: {body: "#000000", border: "#666666", audio: "audio-negro"},
+  verde: {body: "#079811", border: "#6ac170", audio: "audio-verde"},
+  cafe: {body: "#82371a", border: "#b48775", audio: "audio-cafe"}
 }
 
 const getRandomInt = function(min, max) {
@@ -16,7 +16,7 @@ const getRandomInt = function(min, max) {
 
 const createBubble = function(color, x, y, r, time_floating, delay_start) {
   const bubble = document.createElement("div");
-  $(bubble).addClass("bubble");
+  $(bubble).addClass("bubble").attr("color-audio", color.audio);
   $container.append(bubble);
   const float = function() {
     new TimelineLite()
@@ -65,14 +65,22 @@ const generateBubbles = function() {
   });
 }
 
+const playSound = function(id) {
+  const audio = document.getElementById(id);
+  audio.load();
+  audio.play();
+}
+
 const destroyBubble = function() {
   $("#container").on("click", ".bubble", function() {
     let $this_bubble = $(this);
     const exploteBubble = function() {
+      playSound($this_bubble.attr("color-audio"));
       TweenLite.to($this_bubble, 0.2, {scale: 3, autoAlpha: 0});
     }
     const pos = $(this).position();
     new TimelineMax()
+      .add(playSound.bind(this, "audio-laser"))
       .to("#rocket", 0.4, { x: pos.left, y: pos.top, autoAlpha: 0 })
       .add(exploteBubble);
   });
