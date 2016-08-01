@@ -76,7 +76,11 @@ const destroyBubble = function() {
     let $this_bubble = $(this);
     const exploteBubble = function() {
       playSound($this_bubble.attr("color-audio"));
-      TweenLite.to($this_bubble, 0.2, {scale: 3, autoAlpha: 0});
+      new TimelineLite()
+        .to($this_bubble, 0.2, {scale: 3, autoAlpha: 0})
+        .add(function() {
+          $this_bubble.remove();
+        });
     }
     const pos = $(this).position();
     new TimelineMax()
