@@ -50,7 +50,7 @@ const generateBubbles = function() {
   let buble_min_size = $container.width() * 0.05;
   let buble_max_size = $container.width() * 0.1;
   if(typeof window.orientation !== 'undefined'){
-    buble_min_size = $container.width() * 0.15;
+    buble_min_size = $container.width() * 0.18;
     buble_max_size = $container.width() * 0.25;
   }
   $.each(colores, function(index, color) {
@@ -62,6 +62,19 @@ const generateBubbles = function() {
       const delay_start = (getRandomInt(0, 7000) / 1000) * (i+3);
       createBubble(color, x, y, r, time_floating, delay_start);
     }
+  });
+}
+
+const destroyBubble = function() {
+  $("#container").on("click", ".bubble", function() {
+    let $this_bubble = $(this);
+    const exploteBubble = function() {
+      TweenLite.to($this_bubble, 0.2, {scale: 3, autoAlpha: 0});
+    }
+    const pos = $(this).position();
+    new TimelineMax()
+      .to("#rocket", 0.4, { x: pos.left, y: pos.top, autoAlpha: 0 })
+      .add(exploteBubble);
   });
 }
 
@@ -88,4 +101,5 @@ $(document).ready(function() {
   $container = $("#container");
   moveRocket();
   generateBubbles();
+  destroyBubble();
 });
