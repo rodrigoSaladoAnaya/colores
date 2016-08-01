@@ -30,7 +30,8 @@ const createBubble = function(color, x, y, r, time_floating, delay_start) {
         autoAlpha: 1,
         display:'block'
       })
-      .to(bubble, time_floating, {y: (r * -2)})
+      .to(bubble, time_floating, {y: (r * -1)})
+      .to(bubble, 2, {autoAlpha: 0})
   }
 
   const zigzag = function() {
@@ -49,8 +50,8 @@ const generateBubbles = function() {
   let buble_min_size = $container.width() * 0.05;
   let buble_max_size = $container.width() * 0.1;
   if(typeof window.orientation !== 'undefined'){
-    buble_min_size = $container.width() * 0.1;
-    buble_max_size = $container.width() * 0.2;
+    buble_min_size = $container.width() * 0.15;
+    buble_max_size = $container.width() * 0.25;
   }
   $.each(colores, function(index, color) {
     for(let i = 0; i < 4; i++) {
