@@ -58,13 +58,7 @@ const generateBubbles = function() {
 }
 
 const initBullet = function() {
-  TweenLite.set("#bullet", {
-    transformOrigin:"50% 50%",
-    rotation: -90,
-    x: $container.width() / 2,
-    y: $container.height() - 85,
-    autoAlpha: 1
-  });
+  TweenLite.set("#bullet", { autoAlpha: 0 });
 }
 
 const destroyBubble = function() {
@@ -80,14 +74,14 @@ const moveBullet = function() {
   $("#container").mousemove(function(event) {
     let bulletPos= {
       x: $container.width() / 2,
-      y: $container.height() - 85
+      y: $container.height() - 200
     };
     let angle = Math.atan2(event.pageX- bulletPos.x, -(event.pageY - bulletPos.y)) * (180/Math.PI) - 95;
     TweenLite.set("#bullet", {
       transformOrigin:"50% 50%",
       rotation: angle,
-      x: $container.width() / 2,
-      y: $container.height() - 85,
+      x: bulletPos.x,
+      y: bulletPos.y,
       autoAlpha: 1
     });
   });
