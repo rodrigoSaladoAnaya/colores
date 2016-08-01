@@ -8,7 +8,7 @@ const colores = {
   verde: {body: "#079811", border: "#6ac170"},
   cafe: {body: "#82371a", border: "#b48775"}
 }
-const x_limit = 150
+const x_limit = 200
 
 const getRandomInt = function(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
