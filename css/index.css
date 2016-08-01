@@ -15,3 +15,8 @@ html, body {
   box-shadow: 0 8px 6px -5px #2f1f1e;
   cursor: pointer;
 }
+
+#bullet {
+  position: absolute;
+  z-index: 9999;
+}
