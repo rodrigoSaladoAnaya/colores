@@ -46,8 +46,12 @@ const createBubble = function(color, x, y, r, time_floating, delay_start) {
 }
 
 const generateBubbles = function() {
-  const buble_min_size = $container.width() * 0.07;
-  const buble_max_size = $container.width() * 0.1;
+  let buble_min_size = $container.width() * 0.07;
+  let buble_max_size = $container.width() * 0.1;
+  if(typeof window.orientation !== 'undefined'){
+    buble_min_size = $container.width() * 0.2;
+    buble_max_size = $container.width() * 0.3;
+  }
   $.each(colores, function(index, color) {
     for(let i = 0; i < 4; i++) {
       const r = getRandomInt(buble_min_size, buble_max_size);
