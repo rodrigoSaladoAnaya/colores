@@ -46,7 +46,7 @@ const createBubble = function(color, x, y, r, time_floating, delay_start) {
 }
 
 const generateBubbles = function() {
-  const buble_min_size = $container.width() * 0.05;
+  const buble_min_size = $container.width() * 0.07;
   const buble_max_size = $container.width() * 0.1;
   $.each(colores, function(index, color) {
     for(let i = 0; i < 4; i++) {
