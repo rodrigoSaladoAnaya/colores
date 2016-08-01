@@ -1,4 +1,5 @@
 let $container;
+
 const colores = {
   blanco: {body: "#fff", border: "#e5e5e5"},
   rojo: {body: "#e50000", border: "#cc0000"},
@@ -8,7 +9,6 @@ const colores = {
   verde: {body: "#079811", border: "#6ac170"},
   cafe: {body: "#82371a", border: "#b48775"}
 }
-const x_limit = 200
 
 const getRandomInt = function(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -18,7 +18,6 @@ const createBubble = function(color, x, y, r, time_floating, delay_start) {
   const bubble = document.createElement("div");
   $(bubble).addClass("bubble");
   $container.append(bubble);
-
   const float = function() {
     new TimelineLite()
       .set(bubble, {
@@ -27,13 +26,15 @@ const createBubble = function(color, x, y, r, time_floating, delay_start) {
         width: r,
         height: r,
         backgroundColor: color.body,
-        borderColor: color.border
+        borderColor: color.border,
+        autoAlpha: 1,
+        display:'block'
       })
       .to(bubble, time_floating, {y: (r * -2)})
   }
 
   const zigzag = function() {
-    const mov_x = getRandomInt(10, x_limit);
+    const mov_x = getRandomInt(10, 30);
     new TimelineMax({repeat: -1})
       .to(bubble, 2, {x: "+="+mov_x, ease: Sine.easeInOut})
       .to(bubble, 2, {x: "-="+mov_x, ease: Sine.easeInOut})
@@ -45,10 +46,12 @@ const createBubble = function(color, x, y, r, time_floating, delay_start) {
 }
 
 const generateBubbles = function() {
+  const buble_min_size = $container.width() * 0.05;
+  const buble_max_size = $container.width() * 0.1;
   $.each(colores, function(index, color) {
     for(let i = 0; i < 4; i++) {
-      const r = getRandomInt(70, x_limit - 100);
-      const x = getRandomInt(x_limit, $container.width() - x_limit);
+      const r = getRandomInt(buble_min_size, buble_max_size);
+      const x = getRandomInt(0, $container.width());
       const y = $container.height() - r;
       const time_floating = getRandomInt(30, 50)
       const delay_start = (getRandomInt(0, 7000) / 1000) * (i+3);
@@ -57,31 +60,20 @@ const generateBubbles = function() {
   });
 }
 
-const initBullet = function() {
-  TweenLite.set("#bullet", { autoAlpha: 0 });
-}
-
-const destroyBubble = function() {
-  $("#container").on("click", ".bubble", function() {
-    const pos = $(this).position();
-    new TimelineMax()
-      .to("#bullet", 0.4, { x: pos.left, y: pos.top, autoAlpha: 0 })
-      .add(initBullet);
-  });
-}
-
-const moveBullet = function() {
-  $("#container").mousemove(function(event) {
-    let bulletPos= {
+const moveRocket = function() {
+  $(document).mousemove(function(e) {
+    let rocket_pos = {
       x: $container.width() / 2,
-      y: $container.height() - 200
+      y: $container.height() - 100
     };
-    let angle = Math.atan2(event.pageX- bulletPos.x, -(event.pageY - bulletPos.y)) * (180/Math.PI) - 95;
-    TweenLite.set("#bullet", {
-      transformOrigin:"50% 50%",
-      rotation: angle,
-      x: bulletPos.x,
-      y: bulletPos.y,
+    let rotation_angle = Math.atan2(
+      event.pageX- rocket_pos.x, -(event.pageY - rocket_pos.y)
+    ) * (180/Math.PI) - 53;
+    TweenLite.set("#rocket", {
+      transformOrigin: "50% 50%",
+      rotation: rotation_angle,
+      x: rocket_pos.x,
+      y: rocket_pos.y,
       autoAlpha: 1
     });
   });
@@ -89,8 +81,6 @@ const moveBullet = function() {
 
 $(document).ready(function() {
   $container = $("#container");
-  initBullet();
-  moveBullet();
+  moveRocket();
   generateBubbles();
-  destroyBubble();
 });
