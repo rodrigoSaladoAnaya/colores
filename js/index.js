@@ -1,8 +1,14 @@
 let $container;
 const colores = {
   blanco: {body: "#fff", border: "#e5e5e5"},
-  rojo: {body: "#e50000", border: "#cc0000"}
+  rojo: {body: "#e50000", border: "#cc0000"},
+  amarillo: {body: "#fef35a", border: "#fef79c"},
+  azul: {body: "#1919ff", border: "#4c4cff"},
+  negro: {body: "#000000", border: "#666666"},
+  verde: {body: "#079811", border: "#6ac170"},
+  cafe: {body: "#82371a", border: "#b48775"}
 }
+const x_limit = 120
 
 const getRandomInt = function(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -27,7 +33,7 @@ const createBubble = function(color, x, y, r, time_floating, delay_start) {
   }
 
   const zigzag = function() {
-    const mov_x = getRandomInt(10, 100);
+    const mov_x = getRandomInt(10, x_limit);
     new TimelineMax({repeat: -1})
       .to(bubble, 2, {x: "+="+mov_x, ease: Sine.easeInOut})
       .to(bubble, 2, {x: "-="+mov_x, ease: Sine.easeInOut})
@@ -40,29 +46,19 @@ const createBubble = function(color, x, y, r, time_floating, delay_start) {
 
 const generateBubbles = function() {
   $.each(colores, function(index, color) {
-    for(let i = 0; i < 5; i++) {
-      const r = getRandomInt(20, 50);
-      const x = getRandomInt(r, $container.width() - r);
+    for(let i = 0; i < 4; i++) {
+      const r = getRandomInt(90, 120);
+      const x = getRandomInt(x_limit, $container.width() - x_limit);
       const y = $container.height();
-      const time_floating = getRandomInt(10, 30)
-      const delay_start = getRandomInt(0, 4000) / 1000;
+      const time_floating = getRandomInt(30, 50)
+      const delay_start = (getRandomInt(0, 10000) / 1000) * (i+3);
       createBubble(color, x, y, r, time_floating, delay_start);
     }
   })
 
 }
 
-const fullscreen = function() {
-  $("#fullsc").click(function() {
-    if (screenfull.enabled) {
-      screenfull.request(document.documentElement);
-    }
-    $(this).hide();
-    generateBubbles();    
-  });
-}
-
 $(document).ready(function() {
-  fullscreen();
   $container = $("#container");
+  generateBubbles();
 });
