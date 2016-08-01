@@ -49,8 +49,8 @@ const generateBubbles = function() {
   let buble_min_size = $container.width() * 0.07;
   let buble_max_size = $container.width() * 0.1;
   if(typeof window.orientation !== 'undefined'){
-    buble_min_size = $container.width() * 0.2;
-    buble_max_size = $container.width() * 0.3;
+    buble_min_size = $container.width() * 0.7;
+    buble_max_size = $container.width() * 0.2;
   }
   $.each(colores, function(index, color) {
     for(let i = 0; i < 4; i++) {
